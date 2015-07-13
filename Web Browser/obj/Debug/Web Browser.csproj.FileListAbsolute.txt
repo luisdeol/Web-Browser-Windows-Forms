@@ -1,0 +1,10 @@
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\bin\Debug\Web Browser.exe.config
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\bin\Debug\Web Browser.exe
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\bin\Debug\Web Browser.pdb
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web Browser.csprojResolveAssemblyReference.cache
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web_Browser.Form1.resources
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web_Browser.Properties.Resources.resources
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web Browser.csproj.GenerateResource.Cache
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web Browser.exe
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web Browser.pdb
+C:\Users\LuisFelipe\Documents\Visual Studio 2013\Projects\Web Browser\Web Browser\obj\Debug\Web_Browser.Historico.resources
