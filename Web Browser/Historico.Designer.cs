@@ -39,6 +39,7 @@
             this.historicoListBox.Name = "historicoListBox";
             this.historicoListBox.Size = new System.Drawing.Size(454, 199);
             this.historicoListBox.TabIndex = 0;
+            this.historicoListBox.DoubleClick += new System.EventHandler(this.historicoListBox_DoubleClick);
             // 
             // button1
             // 

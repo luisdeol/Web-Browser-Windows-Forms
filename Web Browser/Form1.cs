@@ -13,6 +13,8 @@ namespace Web_Browser
 {
     public partial class Form1 : Form
     {
+        string pathFav = String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt");
+        string pathHist = String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt");
         public Form1()
         {
             InitializeComponent();
@@ -22,30 +24,22 @@ namespace Web_Browser
         private void Form1_Load(object sender, EventArgs e)
         {
             webBrowser1.GoHome();
-            if (File.Exists((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"))))
+            if (File.Exists(pathFav))
             {
-                StreamReader fav = new StreamReader(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"));
+                StreamReader fav = new StreamReader(pathFav);
                 List<string> favLista = fav.ReadToEnd().Split('\n').ToList();
+                fav.Close();
                 favLista.Remove(favLista.Last());
                 foreach (string itens in favLista)
-                {
-                    ToolStripMenuItem favItem = new ToolStripMenuItem();
-                    favItem.Text = itens;
-                    favoritosToolStripMenuItem.DropDownItems.Insert(favoritosToolStripMenuItem.DropDownItems.Count, favItem);
-                }
+                    {
+                        ToolStripMenuItem favItem = new ToolStripMenuItem();
+                        favItem.Text = itens;
+                        favoritosToolStripMenuItem.DropDownItems.Insert(favoritosToolStripMenuItem.DropDownItems.Count, favItem);
+                    }
             }
             else
             {
-                File.CreateText((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"))).Close();
-                StreamReader fav = new StreamReader(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"));
-                List<string> favLista = fav.ReadToEnd().Split('\n').ToList();
-                favLista.Remove(favLista.Last());
-                foreach (string itens in favLista)
-                {
-                    ToolStripMenuItem favItem = new ToolStripMenuItem();
-                    favItem.Text = itens;
-                    favoritosToolStripMenuItem.DropDownItems.Insert(favoritosToolStripMenuItem.DropDownItems.Count, favItem);
-                }
+                File.CreateText((pathFav)).Close();
             }
         }
 
@@ -67,16 +61,16 @@ namespace Web_Browser
 
         private void urltextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string conditionW="www";
+            string conditionW="www.";
             if (e.KeyChar == 13)
             {
-                if (urltextBox.Text.Contains("http://"))
+                if (urltextBox.Text.Contains("http://")||urltextBox.Text.Contains("https://"))
                 {
-                    if (urltextBox.Text.Substring(7, 3)==conditionW.ToLower()){
+                    if (urltextBox.Text.Substring(7, 4)==conditionW.ToLower()){
                         webBrowser1.Navigate(new Uri(urltextBox.Text)); 
                     }
                     else{
-                        webBrowser1.Navigate(new Uri("http://www."+urltextBox.Text));
+                        webBrowser1.Navigate(new Uri(urltextBox.Text.Insert(7, "www.")));
                     }
                 }
                 else
@@ -95,12 +89,12 @@ namespace Web_Browser
 
         private void favButton_Click(object sender, EventArgs e)
         {
-            if (File.Exists(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt")))
+            if (File.Exists(pathFav))
                 {
-                    StreamReader favFile = new StreamReader(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"));
+                    StreamReader favFile = new StreamReader(pathFav);
                     string favList = favFile.ReadToEnd();
                     favFile.Close();
-                    using (StreamWriter file = new StreamWriter(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"), true))
+                    using (StreamWriter file = new StreamWriter(pathFav, true))
                     {
                         if (!favList.Contains(webBrowser1.Url.ToString()))
                         {
@@ -133,18 +127,18 @@ namespace Web_Browser
         private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             urltextBox.Text = webBrowser1.Url.ToString();
-            if (File.Exists(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")))
+            if (File.Exists(pathHist))
             {
-                StreamReader hist = new StreamReader((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")));
+                StreamReader hist = new StreamReader(pathHist);
                 List<string> historicoList = hist.ReadToEnd().Split('\n').Select(h => h.Trim()).ToList();
                 hist.Close();
                 historicoList.Remove(historicoList.Last());
                 int i = historicoList.Count;
-                if (new FileInfo(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")).Length > 0)
+                if (new FileInfo(pathHist).Length > 0)
                 {
                     if (!historicoList[i - 1].Equals((webBrowser1.Url.ToString())))
                     {
-                        using (StreamWriter historico = new StreamWriter((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")), true))
+                        using (StreamWriter historico = new StreamWriter((pathHist), true))
                         {
                             historico.WriteLine(webBrowser1.Url.ToString());
                         }
@@ -152,7 +146,7 @@ namespace Web_Browser
                 }
                 else
                 {
-                    using (StreamWriter historico = new StreamWriter((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")), true))
+                    using (StreamWriter historico = new StreamWriter(pathHist, true))
                     {
                         historico.WriteLine(webBrowser1.Url.ToString());
                     }
@@ -160,8 +154,8 @@ namespace Web_Browser
             }
             else
             {
-                File.CreateText(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")).Close();
-                using (StreamWriter historico = new StreamWriter((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")), true))
+                File.CreateText(pathHist).Close();
+                using (StreamWriter historico = new StreamWriter(pathHist, true))
                     {
                         historico.WriteLine(webBrowser1.Url.ToString());
                     }

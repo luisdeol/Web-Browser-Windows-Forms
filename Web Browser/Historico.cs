@@ -13,6 +13,7 @@ namespace Web_Browser
 {
     public partial class Historico : Form
     {
+        string pathHist = String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt");
         public Historico()
         {
             InitializeComponent();
@@ -20,18 +21,19 @@ namespace Web_Browser
 
         private void Historico_Load(object sender, EventArgs e)
         {
-            if (File.Exists(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")))
+            if (File.Exists(pathHist))
             {
-                StreamReader historico = new StreamReader((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")));
+                StreamReader historico = new StreamReader((pathHist));
                 List<string> historicoList = historico.ReadToEnd().Split('\n').ToList();
                 historicoList.Remove(historicoList.Last());
                 historicoListBox.DataSource = historicoList;
             }
             else
             {
-                File.CreateText((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt"))).Close();
-                StreamReader historico = new StreamReader((String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\historico.txt")));
+                File.CreateText((pathHist)).Close();
+                StreamReader historico = new StreamReader((pathHist));
                 List<string> historicoList = historico.ReadToEnd().Split('\n').ToList();
+                historico.Close();
                 historicoListBox.DataSource = historicoList;
             }
 
