@@ -31,11 +31,11 @@ namespace Web_Browser
                 fav.Close();
                 favLista.Remove(favLista.Last());
                 foreach (string itens in favLista)
-                    {
-                        ToolStripMenuItem favItem = new ToolStripMenuItem();
-                        favItem.Text = itens;
-                        favoritosToolStripMenuItem.DropDownItems.Insert(favoritosToolStripMenuItem.DropDownItems.Count, favItem);
-                    }
+                {
+                    ToolStripMenuItem favItem = new ToolStripMenuItem();
+                    favItem.Text = itens;
+                    favoritosToolStripMenuItem.DropDownItems.Insert(favoritosToolStripMenuItem.DropDownItems.Count, favItem);
+                }
             }
             else
             {
@@ -107,11 +107,11 @@ namespace Web_Browser
             }
             else 
                 {
-                    File.CreateText(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt")).Close();
-                    StreamReader favFile = new StreamReader(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"));
+                    File.CreateText(pathFav).Close();
+                    StreamReader favFile = new StreamReader(pathFav);
                     string favList = favFile.ReadToEnd();
                     favFile.Close();
-                    using (StreamWriter file = new StreamWriter(String.Concat((Path.GetDirectoryName(Application.ExecutablePath)), @"\fav.txt"), true))
+                    using (StreamWriter file = new StreamWriter(pathFav, true))
                     {
                         if (!favList.Contains(webBrowser1.Url.ToString()))
                         {
